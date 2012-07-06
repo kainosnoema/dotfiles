@@ -1,0 +1,9 @@
+*~
+*.bak
+*.log
+*.pid
+*.swp
+.bundle
+.DS_Store
+Thumbs.db
+tmp/**/*

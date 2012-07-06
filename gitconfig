@@ -1,0 +1,27 @@
+[user]
+    name = Evan Owen
+    email = kainosnoema@gmail.com
+[core]
+    editor = subl -w
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+[alias]
+    br = branch
+    ci = commit -s -v
+    co = checkout
+    di = diff
+    st = status
+[push]
+    default = current
+[branch]
+    autosetuprebase = always
+[merge]
+    conflictstyle = diff3
+[credential]
+    helper = osxkeychain
+[github]
+    user = kainosnoema
