@@ -3,6 +3,7 @@
 	email = kainosnoema@gmail.com
 [core]
 	editor = subl -w
+	excludesfile = ~/.gitignore
 [color]
 	ui = auto
 	diff = auto
@@ -15,13 +16,21 @@
 	co = checkout
 	di = diff
 	st = status
+	l  = "!source ~/.githelpers && pretty_git_log"
+	h  = "!source ~/.githelpers && show_git_head"
+	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 [push]
 	default = current
 [branch]
 	autosetuprebase = always
 [merge]
 	conflictstyle = diff3
+[rebase]
+	autosquash = true
 [credential]
 	helper = osxkeychain
 [github]
 	user = kainosnoema
+[rerere]
+	enabled = 1

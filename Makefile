@@ -12,6 +12,7 @@ link:
 		ln -hfsv $(PWD)/bashrc        $(HOME)/.bashrc
 		ln -hfsv $(PWD)/gitconfig     $(HOME)/.gitconfig
 		ln -hfsv $(PWD)/gitignore     $(HOME)/.gitignore
+		ln -hfsv $(PWD)/githelpers    $(HOME)/.githelpers
 		ln -hfsv $(PWD)/gitcompletion $(HOME)/.gitcompletion
 		ln -hfsv $(PWD)/gemrc         $(HOME)/.gemrc
 		ln -hfsv $(PWD)/irbrc         $(HOME)/.irbrc
