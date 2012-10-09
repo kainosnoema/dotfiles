@@ -28,3 +28,22 @@ pretty_git_log() {
     # Page only if we need to
     less -FXRS
 }
+
+prune_merged() {
+  test -n "$1" && prune_merged_remotes $@ || prune_merged_local
+}
+
+prune_merged_local() {
+  git branch --list --merged |
+    grep --invert-match -E '\*|master' |
+    xargs -n 1 git branch --delete
+}
+
+prune_merged_remotes() {
+  git fetch origin
+  git remote prune origin
+  git branch --list --remote --merged $1 |
+    grep --invert-match -E "HEAD|master|$1" |
+    sed 's/ *origin\///' |
+    xargs -p -I branch git push origin :branch
+}
