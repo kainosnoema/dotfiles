@@ -74,6 +74,7 @@ homebrew_formulae = \
 	memcached \
 	mongodb \
 	mysql \
+	postgres \
 	redis \
 	yajl
 install-brew-formulae:
