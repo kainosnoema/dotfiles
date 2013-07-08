@@ -1,6 +1,7 @@
 PATH=~/bin:/usr/local/bin:$PATH
 export PATH
 
+# completion
 if [ -f /opt/local/etc/bash_completion ]; then
   . /opt/local/etc/bash_completion
 fi
@@ -13,10 +14,13 @@ complete -o default -o nospace -W \
   host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)"\
   scp sftp ssh
 
-alias g='git'
 complete -o default -o nospace -F _git g
 
-# node version manager
+# aliases
+alias git='hub'
+alias g='git'
+
+# nvm
 . ~/.nvm/nvm.sh
 
 # rbenv
