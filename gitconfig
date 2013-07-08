@@ -23,6 +23,7 @@
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	recommit = commit --amend -CHEAD
 	prune-merged = "!source ~/.githelpers && prune_merged"
+	update = !git checkout $1 && git pull && git prune-merged
 [push]
 	default = current
 [branch]
