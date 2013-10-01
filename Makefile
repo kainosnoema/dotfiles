@@ -15,6 +15,7 @@ link:
 		ln -hfsv $(PWD)/githelpers    $(HOME)/.githelpers
 		ln -hfsv $(PWD)/gitcompletion $(HOME)/.gitcompletion
 		ln -hfsv $(PWD)/gemrc         $(HOME)/.gemrc
+		ln -hfsv $(PWD)/helpers       $(HOME)/.helpers
 		ln -hfsv $(PWD)/irbrc         $(HOME)/.irbrc
 
 # nvm
