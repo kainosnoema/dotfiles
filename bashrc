@@ -7,9 +7,6 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 # bash helpers
 . ~/.helpers
 
-# nvm
-. ~/.nvm/nvm.sh
-
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"

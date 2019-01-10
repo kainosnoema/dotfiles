@@ -1,7 +1,7 @@
 all: link
 
-install: update-local setup-nvm setup-rbenv link
-update: update-local update-nvm  update-rbenv link
+install: update-local setup-rbenv link
+update: update-local update-rbenv link
 
 # Local
 
@@ -17,19 +17,6 @@ link:
 		ln -hfsv $(PWD)/gemrc         $(HOME)/.gemrc
 		ln -hfsv $(PWD)/helpers       $(HOME)/.helpers
 		ln -hfsv $(PWD)/irbrc         $(HOME)/.irbrc
-
-# nvm
-#
-# https://github.com/creationix/nvm
-
-setup-nvm:
-	install-nvm
-install-nvm:
-	git clone -- git://github.com/creationix/nvm.git $(HOME)/.nvm
-update-nvm:
-	cd $(HOME)/.nvm && git pull origin master
-uninstall-nvm:
-	rm -fR $(HOME)/.nvm
 
 # rbenv
 #
@@ -70,21 +57,14 @@ homebrew_formulae = \
 	pcre \
 	wget \
 	git \
-	hub \
-	imagemagick \
-	memcached \
-	mongodb \
-	mysql \
-	postgres \
-	redis \
-	yajl
+	hub
 install-brew-formulae:
 	brew install $(homebrew_formulae)
 
 # Uninstall
 
 clean: uninstall unlink
-uninstall: uninstall-nvm uninstall-rbenv
+uninstall: uninstall-rbenv
 
 unlink:
 	unlink $(HOME)/.bashrc
