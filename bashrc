@@ -1,4 +1,10 @@
-export PATH=~/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/bin:$PATH:~/bin
+
+# AWS credentials
+. ~/.awsrc
+
+# Google credentials
+. ~/.googlerc
 
 # git complete
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -9,7 +15,7 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+eval "$(rbenv init - --no-rehash)"
 
 code() { cd ~/Code/$1; }
 _code_dirs() {
@@ -28,5 +34,6 @@ complete -o default -o nospace -F _git g # complete for the alias
 # terminal
 export TERM=xterm-256color
 export CLICOLOR=1
-export EDITOR=subl
+export EDITOR='subl -w'
 export PS1='\[\033[01;34m\]\w$(__git_ps1 "\[\033[33m\](%s)") \[\033[00m\]\$ '
+export HISTCONTROL=ignoreboth:erasedups

@@ -1,6 +1,7 @@
 [user]
 	name = Evan Owen
 	email = kainosnoema@gmail.com
+	useConfigOnly = true
 [core]
 	editor = subl -w
 	excludesfile = ~/.gitignore
@@ -32,9 +33,14 @@
 	conflictstyle = diff3
 [rebase]
 	autosquash = true
+	autostash = true
 [credential]
 	helper = osxkeychain
 [github]
 	user = kainosnoema
 [rerere]
 	enabled = 1
+[tag]
+	sort = version:refname
+[url "git@github.com:"]
+	insteadOf = https://github.com/

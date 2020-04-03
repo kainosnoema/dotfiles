@@ -54,10 +54,11 @@ install-brew:
 	/usr/bin/ruby -e "$(/usr/bin/curl -fsSL \
 		https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
 homebrew_formulae = \
-	pcre \
-	wget \
+	awscli \
 	git \
-	hub
+	go \
+	hub \
+	wget
 install-brew-formulae:
 	brew install $(homebrew_formulae)
 
