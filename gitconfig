@@ -1,16 +1,20 @@
+# Shared git config.
+#
+# Included from ~/.gitconfig, which stays a machine-local file (gh auth
+# setup-git and other tools write to it). Machine- or work-specific settings
+# go there, after the [include], so they override these.
+
 [user]
 	name = Evan Owen
 	email = kainosnoema@gmail.com
 	useConfigOnly = true
 [core]
-	editor = subl -w
+	editor = cursor --wait
 	excludesfile = ~/.gitignore
+[init]
+	defaultBranch = main
 [color]
 	ui = auto
-	diff = auto
-	status = auto
-	branch = auto
-	interactive = auto
 [alias]
 	br = branch
 	ci = commit -s -v
@@ -19,18 +23,22 @@
 	st = status
 	h  = "!source ~/.githelpers && show_git_head"
 	l  = "!source ~/.githelpers && pretty_git_log"
-	pr = pull-request
+	pr = "!gh pr create"
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	recommit = commit --amend -CHEAD
 	prune-merged = "!source ~/.githelpers && prune_merged"
-	update = !git checkout $1 && git pull && git prune-merged
+	# git update [branch]: check out branch (default: origin's default), pull, prune merged
+	update = "!source ~/.githelpers && update_branch"
 [push]
 	default = current
-[branch]
-	autosetuprebase = always
+	autoSetupRemote = true
+[pull]
+	rebase = true
+[fetch]
+	prune = true
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 [rebase]
 	autosquash = true
 	autostash = true

@@ -16,34 +16,57 @@ SUBJECT="%s"
 
 FORMAT="$HASH}$ABSOLUTE_TIME}$AUTHOR}$SUBJECT"
 
+# Branches that prune_merged never deletes.
+PROTECTED="main|master"
+
 show_git_head() {
   echo "$(pretty_git_log -1) $(git show --color -p --pretty="tformat:")" |
     less -FXRS
 }
 
 pretty_git_log() {
-  git log --pretty="tformat:${FORMAT}" --date=short $* |
+  git log --pretty="tformat:${FORMAT}" --date=short "$@" |
     # Line columns up based on } delimiter
     column -s '}' -t |
     # Page only if we need to
     less -FXRS
 }
 
-prune_merged() {
-  test -n "$1" && prune_merged_remotes $@ || prune_merged_local
+# The remote's default branch (origin/HEAD), falling back to main.
+default_branch() {
+  local ref
+  ref=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+  echo "${ref#origin/}" | grep . || echo main
 }
 
+# git update [branch]: check out branch (default: the remote's default branch),
+# pull, and prune merged local branches.
+update_branch() {
+  git checkout "${1:-$(default_branch)}" && git pull && prune_merged_local
+}
+
+prune_merged() {
+  if [ -n "$1" ]; then
+    prune_merged_remotes "$@"
+  else
+    prune_merged_local
+  fi
+}
+
+# Delete local branches merged into HEAD, skipping the current branch (*),
+# branches checked out in other worktrees (+), and protected branches.
 prune_merged_local() {
   git branch --list --merged |
-    grep --invert-match -E '\*|master' |
+    grep --invert-match -E "^[*+]|^ *($PROTECTED)\$" |
     xargs -n 1 git branch --delete
 }
 
+# Delete remote branches merged into $1 (asks before each one).
 prune_merged_remotes() {
   git fetch origin
   git remote prune origin
-  git branch --list --remote --merged $1 |
-    grep --invert-match -E "HEAD|master|$1" |
+  git branch --list --remote --merged "$1" |
+    grep --invert-match -E "HEAD|origin/($PROTECTED)\$|origin/$1\$" |
     sed 's/ *origin\///' |
     xargs -p -I branch git push origin :branch
 }
