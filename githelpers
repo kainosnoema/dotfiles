@@ -61,6 +61,25 @@ prune_merged_local() {
     xargs -n 1 git branch --delete
 }
 
+# Delete local branches whose upstream was deleted on the remote, e.g. after a
+# PR was squash-merged (which --merged can't detect). Lists them and asks once.
+# A branch with unpushed commits is deleted too; recover it with `git reflog`.
+prune_gone() {
+  git fetch --prune --quiet origin || return
+  local branches
+  branches=$(git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads |
+    awk '$2 == "[gone]" { print $1 }' |
+    grep --invert-match -E "^($PROTECTED)\$")
+  [ -z "$branches" ] && { echo "No branches with a deleted upstream."; return; }
+  echo "Branches whose remote branch is gone:"
+  echo "$branches" | sed 's/^/  /'
+  printf "Delete them? [y/N] "
+  read -r answer
+  [ "$answer" = y ] || [ "$answer" = Y ] || return
+  # git refuses to delete a branch checked out here or in another worktree.
+  echo "$branches" | xargs -n 1 git branch -D
+}
+
 # Delete remote branches merged into $1 (asks before each one).
 prune_merged_remotes() {
   git fetch origin

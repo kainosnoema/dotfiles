@@ -12,8 +12,11 @@ make unlink    # remove the symlinks
 
 ## How it works
 
-- `gitignore`, `githelpers`, `gemrc` and `irbrc` are symlinked into `~`. An
-  existing file is moved to `<file>.backup.<timestamp>` first.
+- `gitignore`, `githelpers`, `gemrc` and `irbrc` are symlinked into `~`, and
+  `bin/git-editor` into `~/.local/bin`. An existing file is moved to
+  `<file>.backup.<timestamp>` first.
+- Git's editor is `bin/git-editor`: Cursor at a terminal, a no-op for agents
+  and scripts so they never hang waiting on an editor.
 - `~/.zshrc` and `~/.gitconfig` stay local files, because installers and
   `gh auth setup-git` write to them. `make install` adds one line at the top of
   each that loads `zshrc` / `gitconfig` from this repo.

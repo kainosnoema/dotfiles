@@ -10,6 +10,6 @@ update:
 # Removes the symlinks only. Remove the source/include lines from ~/.zshrc and
 # ~/.gitconfig by hand.
 unlink:
-	for f in .gitignore .githelpers .gemrc .irbrc; do \
+	for f in .gitignore .githelpers .gemrc .irbrc .local/bin/git-editor; do \
 		[ -L "$(HOME)/$$f" ] && unlink "$(HOME)/$$f" || true; \
 	done

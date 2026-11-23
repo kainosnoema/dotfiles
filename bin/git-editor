@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Git's editor (core.editor).
+#
+# A person at a terminal gets Cursor. Agents and scripts, which run git without
+# a terminal, get a no-op, so git keeps its default message or rebase plan
+# instead of waiting on a Cursor tab that nobody will close. (A commit with no
+# -m then aborts with "empty commit message", which is what you want there.)
+
+if [ -n "$CLAUDECODE" ] || ! [ -t 0 ] || ! [ -t 1 ]; then
+  exit 0
+fi
+
+if command -v cursor >/dev/null 2>&1; then
+  exec cursor --wait "$@"
+fi
+exec "${VISUAL:-vi}" "$@"

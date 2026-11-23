@@ -9,12 +9,21 @@
 	email = kainosnoema@gmail.com
 	useConfigOnly = true
 [core]
-	editor = cursor --wait
+	# Cursor for people, a no-op for agents and scripts (see bin/git-editor)
+	editor = ~/.local/bin/git-editor
 	excludesfile = ~/.gitignore
 [init]
 	defaultBranch = main
 [color]
 	ui = auto
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[diff]
+	algorithm = histogram
+[help]
+	autocorrect = prompt
 [alias]
 	br = branch
 	ci = commit -s -v
@@ -30,6 +39,8 @@
 	prune-merged = "!source ~/.githelpers && prune_merged"
 	# git update [branch]: check out branch (default: origin's default), pull, prune merged
 	update = "!source ~/.githelpers && update_branch"
+	# git prune-gone: delete local branches whose remote branch is gone (squash-merged PRs)
+	prune-gone = "!source ~/.githelpers && prune_gone"
 [push]
 	default = current
 	autoSetupRemote = true
@@ -42,12 +53,14 @@
 [rebase]
 	autosquash = true
 	autostash = true
+	updateRefs = true
 [credential]
 	helper = osxkeychain
 [github]
 	user = kainosnoema
 [rerere]
 	enabled = 1
+	autoupdate = true
 [tag]
 	sort = version:refname
 [url "git@github.com:"]

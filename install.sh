@@ -51,6 +51,9 @@ link githelpers .githelpers
 link gemrc      .gemrc
 link irbrc      .irbrc
 
+mkdir -p "$HOME/.local/bin"
+link bin/git-editor .local/bin/git-editor
+
 prepend "$HOME/.zshrc" \
   "# Shared config: $DOTFILES/zshrc
 [ -r \"$DOTFILES/zshrc\" ] && source \"$DOTFILES/zshrc\"" \
